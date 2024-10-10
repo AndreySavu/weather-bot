@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "request_logs")
-public class LogEntity {
+
+public class RequestLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,5 +20,12 @@ public class LogEntity {
     private String command;
     private LocalDateTime requestTime;
     private String response;
+
+    public RequestLog(Long userId, String command, LocalDateTime requestTime, String response){
+        this.userId = userId;
+        this.command = command;
+        this.requestTime = requestTime;
+        this.response = response;
+    }
 
 }
