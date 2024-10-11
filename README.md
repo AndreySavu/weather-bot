@@ -18,7 +18,7 @@
    cd weather-bot
    ```
 3. Создайте экземпляр базы данных PostgreSQL 'weather_logs' на порту 5432, логин и пароль: postgres.
-   Или настройки подключения к базе данных в файле `application.properties`, используя следующие параметры:
+   Или настройте подключения к базе данных в файле `application.properties`, используя следующие параметры:
    
  ```
    spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
