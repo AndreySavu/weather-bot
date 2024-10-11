@@ -26,7 +26,7 @@
    spring.datasource.password=your_password
  ```
    
-5. Запустите приложение с помощью Maven:
+4. Запустите приложение с помощью Maven:
    
 ```.bash
    mvn spring-boot:run
