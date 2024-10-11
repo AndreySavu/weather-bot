@@ -23,7 +23,5 @@ public class WeatherService {
                 .uri(url)
                 .retrieve()
                 .bodyToMono(WeatherResponse.class);
-                //.block();
-                //.doOnError(e -> System.err.println("Error occurred: " + e.getMessage()));
     }
 }
