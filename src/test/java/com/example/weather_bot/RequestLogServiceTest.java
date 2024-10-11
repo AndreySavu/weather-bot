@@ -46,8 +46,6 @@ class RequestLogServiceTest {
 
     @Test
     void testGetRequestLogsWithTimeRange() {
-        LocalDateTime startTime = LocalDateTime.parse("2024-10-10T12:00:00");
-        LocalDateTime endTime = LocalDateTime.parse("2024-10-11T12:00:00");
         Pageable pageable = PageRequest.of(0, 5);
 
         List<RequestLog> logs = Arrays.asList(
@@ -68,8 +66,6 @@ class RequestLogServiceTest {
     @Test
     void testGetRequestLogsByUserId() {
         Long userId = 778836599L;
-        LocalDateTime startTime = LocalDateTime.parse("2024-10-10T12:00:00");
-        LocalDateTime endTime = LocalDateTime.parse("2024-10-11T12:00:00");
         Pageable pageable = PageRequest.of(0, 5);
 
         List<RequestLog> logs = Arrays.asList(
