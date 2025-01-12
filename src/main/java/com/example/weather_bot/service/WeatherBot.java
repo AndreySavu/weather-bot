@@ -73,7 +73,6 @@ public class WeatherBot extends TelegramLongPollingBot {
     private void startCommandReceived(Long chatId, String name) {
         String answer = "Добро пожаловать, " + name + "!\n" +
                 "Это бот для получения погоды." + "\n" +
-                "Я создан в качестве тестового задания для BobrAi." + "\n" +
                 "Для получения погоды введите команду /weather <город>";
         sendMessage(chatId, answer);
     }
