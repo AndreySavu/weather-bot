@@ -14,7 +14,7 @@
 1. Убедитесь, что у вас установлен Java 17 и Maven.
 2. Склонируйте репозиторий на свою локальную машину:
    ```.bash
-   git clone https://github.com/username/weather-bot.git
+   git clone https://github.com/andreysavu/weather-bot.git
    cd weather-bot
    ```
 3. Создайте экземпляр базы данных PostgreSQL 'weather_logs' на порту 5432, логин и пароль: postgres.

@@ -1,6 +1,8 @@
-package com.example.weather_bot.service;
+package com.example.weather_bot.telegram.service;
 
-import com.example.weather_bot.config.BotConfig;
+import com.example.weather_bot.service.RequestLogService;
+import com.example.weather_bot.service.WeatherService;
+import com.example.weather_bot.telegram.config.BotConfig;
 import com.example.weather_bot.model.RequestLog;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -52,11 +54,11 @@ public class WeatherBot extends TelegramLongPollingBot {
                                                 Описание: %s
                                                 Влажность: %d%%
                                                 Скорость ветра: %sм/с""",
-                                                weatherResponse.getMain().getTemp(),
-                                                weatherResponse.getMain().getFeels_like(),
-                                                weatherResponse.getWeather().get(0).getDescription(),
-                                                weatherResponse.getMain().getHumidity(),
-                                                weatherResponse.getWind().getSpeed());
+                                                weatherResponse.main().temp(),
+                                                weatherResponse.main().feels_like(),
+                                                weatherResponse.weather().get(0).description(),
+                                                weatherResponse.main().humidity(),
+                                                weatherResponse.wind().speed());
                                 sendMessage(chatId, response);
 
                                 // Логирование

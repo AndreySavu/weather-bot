@@ -1,4 +1,4 @@
-package com.example.weather_bot.config;
+package com.example.weather_bot.telegram.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

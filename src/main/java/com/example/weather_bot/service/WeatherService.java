@@ -1,6 +1,6 @@
 package com.example.weather_bot.service;
 
-import com.example.weather_bot.model.WeatherResponse;
+import com.example.weather_bot.telegram.responses.WeatherResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

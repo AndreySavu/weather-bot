@@ -34,7 +34,7 @@ public class RequestLog {
 
     @Column(name = "user_id")
     @Schema(description = "Идентификатор пользователя, который отправил запрос", example = "778836599")
-    private Long userId;
+    private long userId;
 
     public RequestLog(Long userId, String command, LocalDateTime requestTime, String response) {
         this.userId = userId;

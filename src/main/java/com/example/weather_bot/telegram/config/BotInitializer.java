@@ -1,6 +1,6 @@
-package com.example.weather_bot.config;
+package com.example.weather_bot.telegram.config;
 
-import com.example.weather_bot.service.WeatherBot;
+import com.example.weather_bot.telegram.service.WeatherBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
