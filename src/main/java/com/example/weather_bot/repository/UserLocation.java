@@ -1,4 +1,4 @@
-package com.example.weather_bot.model;
+package com.example.weather_bot.repository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

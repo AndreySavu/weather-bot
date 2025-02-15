@@ -1,9 +1,10 @@
 package com.example.weather_bot.telegram.service;
 
+import com.example.weather_bot.service.RequestLog;
 import com.example.weather_bot.service.RequestLogService;
 import com.example.weather_bot.service.WeatherService;
 import com.example.weather_bot.telegram.config.BotConfig;
-import com.example.weather_bot.model.RequestLog;
+import com.example.weather_bot.repository.RequestLogEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -62,7 +63,7 @@ public class WeatherBot extends TelegramLongPollingBot {
                                 sendMessage(chatId, response);
 
                                 // Логирование
-                                RequestLog log = new RequestLog(userId, messageText, LocalDateTime.now(), response);
+                                RequestLog log = new RequestLog(messageText, LocalDateTime.now(), response, userId);
                                 requestLogService.createRequestLog(log);
                             }, throwable -> {
                                 sendMessage(chatId, "Не удалось получить данные о погоде для этого города.");

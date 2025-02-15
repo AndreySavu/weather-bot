@@ -1,14 +1,11 @@
 package com.example.weather_bot;
 
-import com.example.weather_bot.model.RequestLog;
+import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.service.RequestLogService;
 import com.example.weather_bot.controller.RequestLogController;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@SpringBootTest
 //@AutoConfigureWebTestClient
 @WebMvcTest(RequestLogController.class)
-class RequestLogControllerTest {
+class RequestLogEntityControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,8 +34,8 @@ class RequestLogControllerTest {
     void testGetLogs() throws Exception {
         LocalDateTime timestamp = LocalDateTime.parse("2024-12-01 10:00",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        Page<RequestLog> mockPage = new PageImpl<>(
-                List.of(new RequestLog(1L, "GET", timestamp, "/test")),
+        Page<RequestLogEntity> mockPage = new PageImpl<>(
+                List.of(new RequestLogEntity(1L, "GET", timestamp, "/test")),
                 PageRequest.of(0, 5),
                 1
         );
@@ -56,8 +53,8 @@ class RequestLogControllerTest {
     void testGetLogsByUserId() throws Exception {
         LocalDateTime timestamp = LocalDateTime.parse("2024-12-01 10:00",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        Page<RequestLog> mockPage = new PageImpl<>(
-                List.of(new RequestLog(1L, "GET", timestamp, "/user-test")),
+        Page<RequestLogEntity> mockPage = new PageImpl<>(
+                List.of(new RequestLogEntity(1L, "GET", timestamp, "/user-test")),
                 PageRequest.of(0, 5),
                 1
         );

@@ -1,6 +1,7 @@
 package com.example.weather_bot.controller;
 
-import com.example.weather_bot.model.RequestLog;
+import com.example.weather_bot.mapper.MapStructMapper;
+import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.service.RequestLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,19 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestLogController {
 
     private final RequestLogService requestLogService;
+    private final MapStructMapper mapper;
 
     @Operation(summary = "Получение логов",
             description = """
                     Получение логов по запросам с пагинацией и фильтром по времени.
                     Время вводится в формате yyyy-MM-dd HH:mm""")
     @GetMapping
-    public ResponseEntity<Page<RequestLog>> getLogs(
+    public ResponseEntity<Page<RequestLogResponse>> getLogs(
             @RequestParam(name = "offset", defaultValue = "0") int offset,
             @RequestParam(name = "limit", defaultValue = "5") int limit,
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime
     ) {
-        Page<RequestLog> logs = requestLogService.getRequestLogs(startTime, endTime, offset, limit);
+        Page<RequestLogResponse> logs = mapper.toRequestLogResponse(
+                requestLogService.getRequestLogs(startTime, endTime, offset, limit));
         return ResponseEntity.ok(logs);
     }
 
@@ -41,14 +44,15 @@ public class RequestLogController {
                     Получение логов по конкретному пользователю с пагинацией и фильтром по времени.
                     Время вводится в формате yyyy-MM-dd HH:mm""")
     @GetMapping("/{userId}")
-    public ResponseEntity<Page<RequestLog>> getLogsByUserId(
+    public ResponseEntity<Page<RequestLogResponse>> getLogsByUserId(
             @PathVariable Long userId,
             @RequestParam(name = "offset", defaultValue = "0") int offset,
             @RequestParam(name = "limit", defaultValue = "5") int limit,
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime
     ) {
-        Page<RequestLog> logs = requestLogService.getRequestLogsByUserId(userId, startTime, endTime, offset, limit);
+        Page<RequestLogResponse> logs = mapper.toRequestLogResponse(
+                requestLogService.getRequestLogsByUserId(userId, startTime, endTime, offset, limit));
         return ResponseEntity.ok(logs);
     }
 }

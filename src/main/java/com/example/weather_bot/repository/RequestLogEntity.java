@@ -1,4 +1,4 @@
-package com.example.weather_bot.model;
+package com.example.weather_bot.repository;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -7,15 +7,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name = "request_logs")
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "Модель для логирования запросов")
-public class RequestLog {
+public class RequestLogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +40,4 @@ public class RequestLog {
     @Schema(description = "Идентификатор пользователя, который отправил запрос", example = "778836599")
     private long userId;
 
-    public RequestLog(Long userId, String command, LocalDateTime requestTime, String response) {
-        this.userId = userId;
-        this.command = command;
-        this.requestTime = requestTime;
-        this.response = response;
-    }
-
-    public RequestLog() {
-    }
 }

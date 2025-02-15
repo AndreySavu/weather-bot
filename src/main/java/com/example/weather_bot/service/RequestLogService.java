@@ -1,6 +1,7 @@
 package com.example.weather_bot.service;
 
-import com.example.weather_bot.model.RequestLog;
+import com.example.weather_bot.mapper.MapStructMapper;
+import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.repository.RequestLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,10 @@ import java.time.format.DateTimeFormatter;
 public class RequestLogService {
 
     private final RequestLogRepository requestLogRepository;
+    private final MapStructMapper mapper;
 
     public void createRequestLog(RequestLog requestLog) {
-        requestLogRepository.save(requestLog);
+        requestLogRepository.save(mapper.toRequestLogEntity(requestLog));
     }
 
     public Page<RequestLog> getRequestLogs(String startTime, String endTime, int offset, int limit) {
@@ -27,9 +29,10 @@ public class RequestLogService {
         if (startTime != null && endTime != null) {
             LocalDateTime startTimeParsed = LocalDateTime.parse(startTime, formatter);
             LocalDateTime endTimeParsed = LocalDateTime.parse(endTime, formatter);
-            return requestLogRepository.findByRequestTimeBetween(startTimeParsed, endTimeParsed, pageable);
+            return mapper.fromRequestLogEntity(
+                    requestLogRepository.findByRequestTimeBetween(startTimeParsed, endTimeParsed, pageable));
         } else {
-            return requestLogRepository.findAll(pageable);
+            return mapper.fromRequestLogEntity(requestLogRepository.findAll(pageable));
         }
     }
 
@@ -39,9 +42,10 @@ public class RequestLogService {
         if (startTime != null && endTime != null) {
             LocalDateTime startTimeParsed = LocalDateTime.parse(startTime, formatter);
             LocalDateTime endTimeParsed = LocalDateTime.parse(endTime, formatter);
-            return requestLogRepository.findByUserIdAndRequestTimeBetween(userId,startTimeParsed, endTimeParsed, pageable);
+            return mapper.fromRequestLogEntity(
+                    requestLogRepository.findByUserIdAndRequestTimeBetween(userId,startTimeParsed, endTimeParsed, pageable));
         } else {
-            return requestLogRepository.findByUserId(userId, pageable);
+            return mapper.fromRequestLogEntity(requestLogRepository.findByUserId(userId, pageable));
         }
     }
 }

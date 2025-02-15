@@ -1,6 +1,6 @@
 package com.example.weather_bot;
 
-import com.example.weather_bot.model.RequestLog;
+import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.repository.RequestLogRepository;
 import com.example.weather_bot.service.RequestLogService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class RequestLogServiceTest {
+class RequestLogEntityServiceTest {
 
     @Mock
     private RequestLogRepository requestLogRepository;
@@ -37,26 +37,26 @@ class RequestLogServiceTest {
 
     @Test
     void testCreateRequestLog() {
-        RequestLog requestLog = new RequestLog(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C");
+        RequestLogEntity requestLogEntity = new RequestLogEntity(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C");
 
-        requestLogService.createRequestLog(requestLog);
+        requestLogService.createRequestLog(requestLogEntity);
 
-        verify(requestLogRepository, times(1)).save(requestLog);
+        verify(requestLogRepository, times(1)).save(requestLogEntity);
     }
 
     @Test
     void testGetRequestLogsWithTimeRange() {
         Pageable pageable = PageRequest.of(0, 5);
 
-        List<RequestLog> logs = Arrays.asList(
-                new RequestLog(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
-                new RequestLog(1L, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
+        List<RequestLogEntity> logs = Arrays.asList(
+                new RequestLogEntity(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
+                new RequestLogEntity(1L, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
         );
-        Page<RequestLog> page = new PageImpl<>(logs, pageable, logs.size());
+        Page<RequestLogEntity> page = new PageImpl<>(logs, pageable, logs.size());
 
         when(requestLogRepository.findByRequestTimeBetween(any(), any(), any())).thenReturn(page);
 
-        Page<RequestLog> result = requestLogService.getRequestLogs("2024-10-10 12:00", "2024-10-11 12:00", 0, 5);
+        Page<RequestLogEntity> result = requestLogService.getRequestLogs("2024-10-10 12:00", "2024-10-11 12:00", 0, 5);
 
         assertThat(result.getContent(), hasSize(2));
         assertThat(result.getTotalElements(), is(2L));
@@ -68,15 +68,15 @@ class RequestLogServiceTest {
         Long userId = 778836599L;
         Pageable pageable = PageRequest.of(0, 5);
 
-        List<RequestLog> logs = Arrays.asList(
-                new RequestLog(userId, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
-                new RequestLog(userId, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
+        List<RequestLogEntity> logs = Arrays.asList(
+                new RequestLogEntity(userId, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
+                new RequestLogEntity(userId, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
         );
-        Page<RequestLog> page = new PageImpl<>(logs, pageable, logs.size());
+        Page<RequestLogEntity> page = new PageImpl<>(logs, pageable, logs.size());
 
         when(requestLogRepository.findByUserIdAndRequestTimeBetween(eq(userId), any(), any(), any())).thenReturn(page);
 
-        Page<RequestLog> result = requestLogService.getRequestLogsByUserId(userId, "2024-10-10 12:00", "2024-10-11 12:00", 0, 5);
+        Page<RequestLogEntity> result = requestLogService.getRequestLogsByUserId(userId, "2024-10-10 12:00", "2024-10-11 12:00", 0, 5);
 
         assertThat(result.getContent(), hasSize(2));
         assertThat(result.getTotalElements(), is(2L));
@@ -86,15 +86,15 @@ class RequestLogServiceTest {
     @Test
     void testGetRequestLogsWithoutTimeRange() {
         Pageable pageable = PageRequest.of(0, 5);
-        List<RequestLog> logs = Arrays.asList(
-                new RequestLog(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
-                new RequestLog(1L, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
+        List<RequestLogEntity> logs = Arrays.asList(
+                new RequestLogEntity(1L, "/weather Новосибирск", LocalDateTime.now(), "Температура: 5°C"),
+                new RequestLogEntity(1L, "/weather Москва", LocalDateTime.now(), "Температура: 10°C")
         );
-        Page<RequestLog> page = new PageImpl<>(logs, pageable, logs.size());
+        Page<RequestLogEntity> page = new PageImpl<>(logs, pageable, logs.size());
 
         when(requestLogRepository.findAll(pageable)).thenReturn(page);
 
-        Page<RequestLog> result = requestLogService.getRequestLogs(null, null, 0, 5);
+        Page<RequestLogEntity> result = requestLogService.getRequestLogs(null, null, 0, 5);
 
         assertThat(result.getContent(), hasSize(2));
         assertThat(result.getTotalElements(), is(2L));
