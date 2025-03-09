@@ -1,7 +1,5 @@
 package com.example.weather_bot.service;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 

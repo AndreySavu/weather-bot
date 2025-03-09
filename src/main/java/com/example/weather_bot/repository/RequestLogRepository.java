@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public interface RequestLogRepository extends JpaRepository<RequestLogEntity, Long> {
 
     @Query("""
-            SELECT r FROM RequestLog r
+            SELECT r FROM RequestLogEntity r
             WHERE requestTime BETWEEN :startTime AND :endTime
             """)
     Page<RequestLogEntity> findByRequestTimeBetween(@Param("startTime") LocalDateTime startTime,
@@ -19,7 +19,7 @@ public interface RequestLogRepository extends JpaRepository<RequestLogEntity, Lo
                                                     Pageable pageable);
 
     @Query("""
-            SELECT r FROM RequestLog r
+            SELECT r FROM RequestLogEntity r
             WHERE userId = :userId
             AND requestTime BETWEEN :startTime AND :endTime
             """)
@@ -29,7 +29,7 @@ public interface RequestLogRepository extends JpaRepository<RequestLogEntity, Lo
                                                              Pageable pageable);
 
     @Query("""
-            SELECT r FROM RequestLog r
+            SELECT r FROM RequestLogEntity r
             WHERE userId = :userId
             """)
     Page<RequestLogEntity> findByUserId(@Param("userId") Long userId, Pageable pageable);

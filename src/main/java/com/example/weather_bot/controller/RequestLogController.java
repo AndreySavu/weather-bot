@@ -1,7 +1,6 @@
 package com.example.weather_bot.controller;
 
 import com.example.weather_bot.mapper.MapStructMapper;
-import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.service.RequestLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +33,7 @@ public class RequestLogController {
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime
     ) {
-        Page<RequestLogResponse> logs = mapper.toRequestLogResponse(
+        Page<RequestLogResponse> logs = mapper.toRequestLogResponsePage(
                 requestLogService.getRequestLogs(startTime, endTime, offset, limit));
         return ResponseEntity.ok(logs);
     }
@@ -51,7 +50,7 @@ public class RequestLogController {
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime
     ) {
-        Page<RequestLogResponse> logs = mapper.toRequestLogResponse(
+        Page<RequestLogResponse> logs = mapper.toRequestLogResponsePage(
                 requestLogService.getRequestLogsByUserId(userId, startTime, endTime, offset, limit));
         return ResponseEntity.ok(logs);
     }

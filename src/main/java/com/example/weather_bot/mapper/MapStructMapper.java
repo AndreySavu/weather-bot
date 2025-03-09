@@ -6,9 +6,36 @@ import com.example.weather_bot.service.RequestLog;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
-@Mapper
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring")
 public interface MapStructMapper {
-    Page<RequestLog> fromRequestLogEntity(Page<RequestLogEntity> entity);
-    Page<RequestLogResponse> toRequestLogResponse(Page<RequestLog> model);
+
+    // Маппинг одиночных объектов
+    RequestLog fromRequestLogEntity(RequestLogEntity entity);
+
     RequestLogEntity toRequestLogEntity(RequestLog model);
+
+    RequestLogResponse toRequestLogResponse(RequestLog model);
+
+    // Маппинг списков (вручную, потому что Page<T> нельзя маппить напрямую)
+    default List<RequestLog> fromRequestLogEntityList(List<RequestLogEntity> entities) {
+        return entities.stream().map(this::fromRequestLogEntity).collect(Collectors.toList());
+    }
+
+    default List<RequestLogResponse> toRequestLogResponseList(List<RequestLog> models) {
+        return models.stream().map(this::toRequestLogResponse).collect(Collectors.toList());
+    }
+
+    // Маппинг Page<T>
+    default Page<RequestLog> fromRequestLogEntityPage(Page<RequestLogEntity> entityPage) {
+        return entityPage.map(this::fromRequestLogEntity);
+    }
+
+    default Page<RequestLogResponse> toRequestLogResponsePage(Page<RequestLog> modelPage) {
+        return modelPage.map(this::toRequestLogResponse);
+    }
+
+
 }

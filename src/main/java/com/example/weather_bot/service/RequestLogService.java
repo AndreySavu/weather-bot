@@ -1,7 +1,6 @@
 package com.example.weather_bot.service;
 
 import com.example.weather_bot.mapper.MapStructMapper;
-import com.example.weather_bot.repository.RequestLogEntity;
 import com.example.weather_bot.repository.RequestLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,10 +28,10 @@ public class RequestLogService {
         if (startTime != null && endTime != null) {
             LocalDateTime startTimeParsed = LocalDateTime.parse(startTime, formatter);
             LocalDateTime endTimeParsed = LocalDateTime.parse(endTime, formatter);
-            return mapper.fromRequestLogEntity(
+            return mapper.fromRequestLogEntityPage(
                     requestLogRepository.findByRequestTimeBetween(startTimeParsed, endTimeParsed, pageable));
         } else {
-            return mapper.fromRequestLogEntity(requestLogRepository.findAll(pageable));
+            return mapper.fromRequestLogEntityPage(requestLogRepository.findAll(pageable));
         }
     }
 
@@ -42,10 +41,10 @@ public class RequestLogService {
         if (startTime != null && endTime != null) {
             LocalDateTime startTimeParsed = LocalDateTime.parse(startTime, formatter);
             LocalDateTime endTimeParsed = LocalDateTime.parse(endTime, formatter);
-            return mapper.fromRequestLogEntity(
+            return mapper.fromRequestLogEntityPage(
                     requestLogRepository.findByUserIdAndRequestTimeBetween(userId,startTimeParsed, endTimeParsed, pageable));
         } else {
-            return mapper.fromRequestLogEntity(requestLogRepository.findByUserId(userId, pageable));
+            return mapper.fromRequestLogEntityPage(requestLogRepository.findByUserId(userId, pageable));
         }
     }
 }
